@@ -1,5 +1,7 @@
 # MrSohnWordCheck
 
+<img src="icons/icon-128.png" alt="MrSohnWordCheck WC 아이콘" width="96" height="96">
+
 Chrome 입력창의 오타·맞춤법·띄어쓰기를 Gemini로 검사하는 개인용 확장입니다. 현재 버전 **1.0.14**, 마지막 기능 변경 표시 **20261102155331 (한국 시간)**. 문서 정리 기준: 2026-11-02.
 
 ## 문서 안내
