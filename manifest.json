@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "MrSohnWordCheck",
+  "version": "1.0.14",
+  "description": "단축키로 오타를 교정하고 미리보기 후 입력창에 적용합니다.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_title": "MrSohnWordCheck 설정",
+    "default_popup": "options.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "commands": {
+    "proofread": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "현재 입력창 오타 교정"
+    }
+  },
+  "optional_host_permissions": [
+    "https://maadm.okpos.co.kr/*"
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

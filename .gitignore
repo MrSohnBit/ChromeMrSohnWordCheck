@@ -1,0 +1,13 @@
+.DS_Store
+.release-state.json
+node_modules/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+*.log
+*.release-tmp
+*.zip
+/preview.png
+/highlight-preview.png
+/review-buttons-preview.png

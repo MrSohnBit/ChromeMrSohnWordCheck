@@ -1,0 +1,33 @@
+const {chromium}=require('playwright');
+const fs=require('fs');
+(async()=>{
+const dir=require('path').resolve(__dirname,'..');
+const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+const page=await browser.newPage({viewport:{width:1100,height:900}});
+await page.setContent(fs.readFileSync(dir+'/test-page.html','utf8'));
+await page.evaluate(()=>{
+ const attach=Element.prototype.attachShadow;
+ Element.prototype.attachShadow=function(o){return attach.call(this,{...o,mode:'open'});};
+ window.chrome={runtime:{onMessage:{addListener:fn=>window.openProof=fn},sendMessage:async m=>{window.sent=m;return{corrected:'오늘 회의는 몇 시에 하나요?\n확인 부탁드립니다.'};}}};
+});
+await page.addScriptTag({path:dir+'/diff.js'});await page.addScriptTag({path:dir+'/protection.js'});await page.addScriptTag({path:dir+'/content.js'});
+const assert=require('assert/strict');
+const field=page.locator('body > textarea').first();
+await field.focus();await page.evaluate(()=>openProof({type:'OPEN_PROOFREADER'}));
+await page.locator('#apply').waitFor();
+await page.getByRole('button',{name:'입력창에 적용'}).click();
+assert.equal(await field.inputValue(),'오늘 회의는 몇 시에 하나요?\n확인 부탁드립니다.');
+console.log('PASS textarea preview and apply');
+await field.fill('안녕 하세요');await field.focus();await page.evaluate(()=>openProof({type:'OPEN_PROOFREADER'}));
+await page.getByRole('button',{name:'취소',exact:true}).click();assert.equal(await field.inputValue(),'안녕 하세요');console.log('PASS cancel preserves original');
+await field.focus();await page.evaluate(()=>openProof({type:'OPEN_PROOFREADER'}));
+await page.evaluate(()=>document.querySelector('textarea').value='새로 작성한 문장');
+await page.getByRole('button',{name:'입력창에 적용'}).click();assert.match(await page.locator('#status').innerText(),/바뀌었습니다/);assert.equal(await field.inputValue(),'새로 작성한 문장');
+await page.getByRole('button',{name:'취소',exact:true}).click();console.log('PASS stale text protection');
+await page.evaluate(()=>{chrome.runtime.sendMessage=async m=>{window.sent=m;return{corrected:'몇 시에'};};const t=document.querySelector('textarea');t.value='오늘 몇시에 하나요?';t.focus();t.setSelectionRange(3,6);openProof({type:'OPEN_PROOFREADER'});});
+await page.getByRole('button',{name:'입력창에 적용'}).click();assert.equal(await field.inputValue(),'오늘 몇 시에 하나요?');console.log('PASS selection replacement');
+await page.locator('input[type=password]').focus();await page.evaluate(()=>{window.sent=null;openProof({type:'OPEN_PROOFREADER'});});assert.equal(await page.evaluate(()=>window.sent),null);assert.match(await page.locator('#status').innerText(),/비밀번호/);await page.getByRole('button',{name:'취소',exact:true}).click();console.log('PASS password blocked');
+await page.locator('[contenteditable]').focus();await page.evaluate(()=>{chrome.runtime.sendMessage=async()=>({corrected:'확인 부탁드립니다.'});openProof({type:'OPEN_PROOFREADER'});});await page.getByRole('button',{name:'입력창에 적용'}).click();assert.equal(await page.locator('[contenteditable]').innerText(),'확인 부탁드립니다.');console.log('PASS contenteditable apply');
+await field.fill('오늘 회의는 몇시에 하나요?');await field.focus();await page.evaluate(()=>{chrome.runtime.sendMessage=async()=>({corrected:'오늘 회의는 몇 시에 하나요?'});openProof({type:'OPEN_PROOFREADER'});});await page.screenshot({path:dir+'/preview.png'});
+await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});
