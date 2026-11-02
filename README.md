@@ -15,16 +15,19 @@ Chrome 입력창의 오타·맞춤법·띄어쓰기를 Gemini로 검사하는 �
 | Codex 등 에이전트 진입점 | [AGENTS.md](AGENTS.md) |
 | 버전별 실제 검증 이력 | [QA.md](QA.md) |
 
-## 다른 사람에게 공유·설치
+## 다운로드·설치
 
-1. **MrSohnWordCheck.zip**을 공유합니다. 개인 API 키는 포함하지 않습니다.
-2. 받는 사람은 압축을 해제하고 `chrome://extensions`에서 개발자 모드를 켭니다.
-3. **압축해제된 확장 프로그램 로드** → 압축 해제한 `MrSohnWordCheck` 폴더를 선택합니다.
-4. WC 아이콘의 설정에서 [AI Studio](https://aistudio.google.com/apikey)에서 발급한 **본인 API 키**를 저장합니다. 테스트 문장으로 API 호출 1회가 성공해야 저장됩니다.
-5. 설정 화면에서 실제 단축키를 확인합니다. 기본값은 Mac **⌘⇧Y**, Windows/Linux **Ctrl+Shift+Y**입니다. 해제됐다면 `chrome://extensions/shortcuts`의 **현재 입력창 오타 교정**에 지정합니다.
-6. 관리자 검수 페이지에 버튼이 필요하면 **검수 페이지 교정 버튼 활성화**를 누르고 사이트 권한을 허용합니다.
+1. [GitHub 저장소](https://github.com/MrSohnBit/ChromeMrSohnWordCheck)에서 **Code → Download ZIP**을 클릭합니다.
+2. 다운로드한 `ChromeMrSohnWordCheck-main.zip`의 압축을 해제합니다.
+3. Chrome 주소창에 `chrome://extensions`를 입력하고 오른쪽 위 **개발자 모드**를 켭니다.
+4. **압축해제된 확장 프로그램 로드**를 클릭하고, `manifest.json`이 들어 있는 `ChromeMrSohnWordCheck-main` 폴더를 선택합니다. ZIP 파일 자체가 아니라 압축 해제한 폴더를 선택하세요.
+5. WC 아이콘의 설정에서 [AI Studio](https://aistudio.google.com/apikey)에서 발급한 **본인 API 키**를 저장합니다. 테스트 문장으로 API 호출 1회가 성공해야 저장됩니다.
+6. 설정 화면에서 실제 단축키를 확인합니다. 기본값은 Mac **⌘⇧Y**, Windows/Linux **Ctrl+Shift+Y**입니다. 해제됐다면 `chrome://extensions/shortcuts`의 **현재 입력창 오타 교정**에 지정합니다.
+7. 관리자 검수 페이지에 버튼이 필요하면 **검수 페이지 교정 버튼 활성화**를 누르고 사이트 권한을 허용합니다.
 
-설치한 폴더는 삭제·이동하지 마세요. 업데이트는 같은 경로의 파일 교체 후 확장 새로고침으로 진행합니다. 같은 확장을 다른 폴더에서 중복 등록하지 마세요.
+다른 사람에게는 위 GitHub 저장소 링크를 공유하면 됩니다. 각 사용자는 본인의 API 키를 등록해야 합니다.
+
+설치한 폴더는 삭제·이동하지 마세요. 업데이트할 때는 다시 **Code → Download ZIP**으로 받아 압축을 해제하고, **기존 설치 폴더 안에 새 파일을 덮어쓴 뒤** `chrome://extensions`에서 MrSohnWordCheck의 **새로고침** 버튼을 누르세요. 같은 확장을 다른 폴더에서 중복 등록하지 마세요. 열려 있던 웹페이지는 미저장 내용을 확인한 후 새로고침해 주세요.
 
 ## 사용법
 
